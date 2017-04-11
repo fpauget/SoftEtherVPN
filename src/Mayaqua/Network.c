@@ -11343,7 +11343,8 @@ void JoinSockToSockEvent(SOCK *sock, SOCK_EVENT *event)
 }
 
 // New special cancel object
-CANCEL *NewCancelSpecial(void *hEvent)
+#ifdef	OS_WIN32
+CANCEL *Win32NewCancelSpecial(void *hEvent)
 {
 	CANCEL *c;
 	// Validate arguments
@@ -11355,16 +11356,11 @@ CANCEL *NewCancelSpecial(void *hEvent)
 	c = ZeroMalloc(sizeof(CANCEL));
 	c->ref = NewRef();
 	c->SpecialFlag = true;
-
-#ifdef	OS_WIN32
 	c->hEvent = (HANDLE)hEvent;
-#else	// OS_WIN32
-	c->pipe_read = (int)hEvent;
-	c->pipe_write = -1;
-#endif	// OS_WIN32
 
 	return c;
 }
+#endif	// OS_WIN32
 
 // Creating a cancel object
 CANCEL *NewCancel()

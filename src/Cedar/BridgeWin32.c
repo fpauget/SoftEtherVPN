@@ -1194,7 +1194,7 @@ ETH *OpenEthInternal(char *name, bool local, bool tapmode, char *tapaddr)
 		// Get event object
 		h = e->SuAdapter->hEvent;
 
-		c = NewCancelSpecial(h);
+		c = Win32NewCancelSpecial(h);
 		e->Cancel = c;
 	}
 	else
@@ -1228,7 +1228,7 @@ ETH *OpenEthInternal(char *name, bool local, bool tapmode, char *tapaddr)
 		// Get event object
 		h = wp->PacketGetReadEvent(e->Adapter);
 
-		c = NewCancelSpecial(h);
+		c = Win32NewCancelSpecial(h);
 		e->Cancel = c;
 
 		e->Packet = wp->PacketAllocatePacket();
