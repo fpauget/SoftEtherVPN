@@ -1022,11 +1022,9 @@ namespace BuildUtil
 				options.Add("-lrt");
 				options.Add("-lnsl");
 				options.Add("-lsocket");
-				options.Add("-ldl");
 			}
 			else if (this.Os == OSList.Linux)
 			{
-				options.Add("-ldl");
 				options.Add("-lrt");
 			}
 			else if (this.Os == OSList.MacOS)
