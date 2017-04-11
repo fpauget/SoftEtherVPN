@@ -107,6 +107,6 @@ i?86|x86pc|i86pc|armv4*|armv5*|armv6*|armv7*)
 	;;
 esac
 
-cp src/makefiles/${OS}_${CPU}.mak Makefile
+cat src/makefiles/head.mak src/makefiles/${OS}_${CPU}.mak src/makefiles/tail.mak > Makefile
 
 echo "The Makefile is generated. Run 'make' to build SoftEther VPN."
