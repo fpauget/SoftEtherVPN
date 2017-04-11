@@ -1110,8 +1110,18 @@ void UnixGetOsInfo(OS_INFO *info)
 			}
 			else
 			{
-				info->OsVersion = CopyStr("Unknown Linux Version");
-				info->OsVendorName = CopyStr("Unknown Vendor");
+				b = ReadDump("/etc/turbolinux-release");
+				if (b != NULL)
+				{
+					info->OsVersion = CfgReadNextLine(b);
+					info->OsVendorName = CopyStr("Debian GNU/Linux");
+					FreeBuf(b);
+				}
+				else
+				{
+					info->OsVersion = CopyStr("Unknown Linux Version");
+					info->OsVendorName = CopyStr("Unknown Vendor");
+				}
 			}
 		}
 
