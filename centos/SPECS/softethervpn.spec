@@ -14,7 +14,6 @@ License:        GPLv2
 URL:            http://www.softether.org/
 Source0:        http://www.softether-download.com/files/softether/v%{majorversion}.%{minorversion}-%{buildversion}-%{buildrelease}-%{dateversion}-tree/Source_Code/softether-src-v%{majorversion}.%{minorversion}-%{buildversion}-%{buildrelease}.tar.gz
 
-BuildRequires:  ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	readline-devel
 

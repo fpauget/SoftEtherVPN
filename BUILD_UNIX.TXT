@@ -15,13 +15,12 @@ You need to install the following software to build SoftEther VPN for UNIX.
 - OpenSSL (crypto, ssl).
 - libiconv.
 - readline.
-- ncurses.
 
 For example, the following commands help you to install the above programs
 on Fedora or CentOS Linux:
 
 $ yum -y groupinstall "Development Tools"
-$ yum -y install readline-devel ncurses-devel openssl-devel
+$ yum -y install readline-devel openssl-devel
 
 
 How to Build

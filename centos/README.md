@@ -27,7 +27,7 @@ This project containts the following files to build an RPM of SoftEther VPN:
 As root, install the following packages:
 
     yum -y groupinstall "Development Tools"
-    yum -y install ncurses-devel openssl-devel readline-devel
+    yum -y install openssl-devel readline-devel
     yum -y install rpmdevtools
 
 As a regular user, create your rpmbuild directory structure:

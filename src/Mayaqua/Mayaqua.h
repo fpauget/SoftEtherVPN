@@ -284,7 +284,6 @@ int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrev, char *CmdLine, int CmdShow)
 #include <net/if_arp.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-//#include <curses.h>
 #ifdef	MAYAQUA_SUPPORTS_GETIFADDRS
 #include <ifaddrs.h>
 #endif	// MAYAQUA_SUPPORTS_GETIFADDRS

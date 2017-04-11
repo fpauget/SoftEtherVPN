@@ -982,7 +982,6 @@ namespace BuildUtil
 				"libiconv",
 				"libcharset",
 				"libedit",
-				"libncurses",
 				"libz",
 			};
 			foreach (string libName in libNames)
