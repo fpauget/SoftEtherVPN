@@ -484,9 +484,6 @@ bool HashForSign(void *dst, UINT dst_size, void *src, UINT src_size);
 bool RsaVerify(void *data, UINT data_size, void *sign, K *k);
 bool RsaVerifyEx(void *data, UINT data_size, void *sign, K *k, UINT bits);
 UINT RsaPublicSize(K *k);
-void RsaPublicToBin(K *k, void *data);
-BUF *RsaPublicToBuf(K *k);
-K *RsaBinToPublic(void *data, UINT size);
 
 X_CRL *FileToXCrl(char *filename);
 X_CRL *FileToXCrlW(wchar_t *filename);
