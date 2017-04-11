@@ -383,6 +383,8 @@ bool SignSecByObject(SECURE *sec, SEC_OBJ *obj, void *dst, void *src, UINT size)
 	CK_MECHANISM mechanism = {CKM_RSA_PKCS, NULL, 0};
 	UINT ret;
 	UCHAR hash[SIGN_HASH_SIZE];
+	CK_ULONG ck_size;
+
 	// Validate arguments
 	if (sec == NULL)
 	{
@@ -423,19 +425,19 @@ bool SignSecByObject(SECURE *sec, SEC_OBJ *obj, void *dst, void *src, UINT size)
 	}
 
 	// Perform Signing
-	size = 128;
+	ck_size = 128;
 	// First try with 1024 bit
-	ret = sec->Api->C_Sign(sec->SessionId, hash, sizeof(hash), dst, &size);
-	if (ret != CKR_OK && 128 < size && size <= 4096/8)
+	ret = sec->Api->C_Sign(sec->SessionId, hash, sizeof(hash), dst, &ck_size);
+	if (ret != CKR_OK && 128 < ck_size && ck_size <= 4096/8)
 	{
 		// Retry with expanded bits
-		ret = sec->Api->C_Sign(sec->SessionId, hash, sizeof(hash), dst, &size);
+		ret = sec->Api->C_Sign(sec->SessionId, hash, sizeof(hash), dst, &ck_size);
 	}
-	if (ret != CKR_OK || size == 0 || size > 4096/8)
+	if (ret != CKR_OK || ck_size == 0 || ck_size > 4096/8)
 	{
 		// Failure
 		sec->Error = SEC_ERROR_HARDWARE_ERROR;
-		Debug("C_Sign Error: 0x%x  size:%d\n", ret, size);
+		Debug("C_Sign Error: 0x%x  size:%d\n", ret, ck_size);
 		return false;
 	}
 
@@ -482,7 +484,7 @@ bool WriteSecKey(SECURE *sec, bool private_obj, char *name, K *k)
 	UINT key_type = CKK_RSA;
 	CK_BBOOL b_true = true, b_false = false, b_private_obj = private_obj;
 	UINT obj_class = CKO_PRIVATE_KEY;
-	UINT object;
+	CK_OBJECT_HANDLE object;
 	UINT ret;
 	BUF *b;
 	RSA *rsa;
@@ -707,7 +709,7 @@ bool WriteSecCert(SECURE *sec, bool private_obj, char *name, X *x)
 	UCHAR value[4096];
 	UINT ret;
 	BUF *b;
-	UINT object;
+	CK_OBJECT_HANDLE object;
 	CK_ATTRIBUTE a[] =
 	{
 		{CKA_SUBJECT,			subject,		0},			// 0
@@ -1260,7 +1262,7 @@ LIST *CloneEnumSecObject(LIST *o)
 LIST *EnumSecObject(SECURE *sec)
 {
 	CK_BBOOL b_true = true, b_false = false;
-	UINT objects[MAX_OBJ];
+	CK_OBJECT_HANDLE objects[MAX_OBJ];
 	UINT i;
 	UINT ret;
 	LIST *o;
@@ -1269,7 +1271,7 @@ LIST *EnumSecObject(SECURE *sec)
 	{
 		{CKA_TOKEN,		&b_true,		sizeof(b_true)},
 	};
-	UINT num_objects = MAX_OBJ;
+	CK_ULONG num_objects = MAX_OBJ;
 	// Validate arguments
 	if (sec == NULL)
 	{
@@ -1385,7 +1387,7 @@ bool WriteSecData(SECURE *sec, bool private_obj, char *name, void *data, UINT si
 {
 	UINT object_class = CKO_DATA;
 	CK_BBOOL b_true = true, b_false = false, b_private_obj = private_obj;
-	UINT object;
+	CK_OBJECT_HANDLE object;
 	CK_ATTRIBUTE a[] =
 	{
 		{CKA_TOKEN,		&b_true,		sizeof(b_true)},
@@ -1709,7 +1711,7 @@ void CloseSecSession(SECURE *sec)
 bool OpenSecSession(SECURE *sec, UINT slot_number)
 {
 	UINT err = 0;
-	UINT session;
+	CK_SESSION_HANDLE session;
 	// Validate arguments
 	if (sec == NULL)
 	{
@@ -1831,7 +1833,7 @@ SECURE *OpenSec(UINT id)
 		return NULL;
 	}
 
-	sec->SlotIdList = (UINT *)ZeroMalloc(sizeof(UINT *) * sec->NumSlot);
+	sec->SlotIdList = (CK_SLOT_ID *)ZeroMalloc(sizeof(UINT *) * sec->NumSlot);
 
 	if (sec->Api->C_GetSlotList(TRUE, sec->SlotIdList, &sec->NumSlot) != CKR_OK)
 	{

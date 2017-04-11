@@ -110,7 +110,6 @@
 
 // Secure.h
 // Header of Secure.c
-
 #ifndef	SECURE_H
 #define	SECURE_H
 
@@ -166,8 +165,8 @@ struct SECURE
 	UINT Error;								// The error that last occurred
 	struct CK_FUNCTION_LIST *Api;			// API
 	bool Initialized;						// Initialization flag
-	UINT NumSlot;							// The number of slots
-	UINT *SlotIdList;						// Slot ID list
+	unsigned long int NumSlot;					// The number of slots
+	unsigned long int *SlotIdList;					// Slot ID list
 	bool SessionCreated;					// Session creation flags
 	UINT SessionId;							// Session ID
 	UINT SessionSlotNumber;					// Slot ID of the session
