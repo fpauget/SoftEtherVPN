@@ -130,6 +130,7 @@ struct VLAN
 // Function prototype
 VLAN *NewVLan(char *instance_name, VLAN_PARAM *param);
 VLAN *NewTap(char *name, char *mac_address);
+void FreeTap(VLAN *v);
 void FreeVLan(VLAN *v);
 CANCEL *VLanGetCancel(VLAN *v);
 bool VLanGetNextPacket(VLAN *v, void **buf, UINT *size);
