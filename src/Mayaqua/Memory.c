@@ -120,6 +120,9 @@
 #include <stdarg.h>
 #include <time.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <signal.h>
 #include <zlib/zlib.h>
 #include <Mayaqua/Mayaqua.h>
 
@@ -636,6 +639,9 @@ UINT SearchBin(void *data, UINT data_start, UINT data_size, void *key, UINT key_
 // Crash immediately
 void CrashNow()
 {
+#ifdef UNIX
+        kill(getpid(), SIGSEGV);
+#else
 	while (true)
 	{
 		UINT r = Rand32();
@@ -643,6 +649,7 @@ void CrashNow()
 
 		*c = Rand8();
 	}
+#endif
 }
 
 // Convert the buffer to candidate
