@@ -70,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_usr}/vpnclient/
 %{_usr}/vpncmd/
 %{_initddir}/vpnserver
-%doc AUTHORS.TXT BUILD_UNIX.TXT BUILD_WINDOWS.TXT ChangeLog ChangeLog.txt LICENSE LICENSE.TXT README README.TXT THIRD_PARTY.TXT WARNING.TXT
+%doc AUTHORS.TXT BUILD_UNIX.TXT BUILD_WINDOWS.TXT ChangeLog.txt LICENSE.TXT README.TXT THIRD_PARTY.TXT WARNING.TXT
 
 %post
 /sbin/chkconfig --add vpnserver
