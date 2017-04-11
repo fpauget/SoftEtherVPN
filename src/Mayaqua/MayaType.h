@@ -227,13 +227,40 @@ typedef int (COMPARE)(void *p1, void *p2);
 #define	GET_ABS(a)			((a) >= 0 ? (a) : -(a))
 
 // Convert the pointer to UINT
+#ifdef __GNUC__
+#if __SIZEOF_POINTER__ == __SIZEOF_INT__
+#define POINTER_TO_KEY(p) (UINT)(p)
+#else // __SIZEOF_POINTER__ == __SIZEOF_INT__
+#define POINTER_TO_KEY(p) HashPtrToUINT(p)
+#endif // __SIZEOF_POINTER__ == __SIZEOF_INT__
+#else // __GNUC__
 #define	POINTER_TO_KEY(p)		((sizeof(void *) == sizeof(UINT)) ? (UINT)(p) : HashPtrToUINT(p))
+#endif // __GNUC__
+
 // Compare the pointer and UINT
 #define	COMPARE_POINTER_AND_KEY(p, i)	(POINTER_TO_KEY(p) == (i))
+
 // Convert the pointer to UINT64
+#ifdef __GNUC__
+#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
+#define	POINTER_TO_UINT64(p) (UINT64)(p)
+#else // __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG_
+#define	POINTER_TO_UINT64(p) (UINT64)((UINT)(p))))
+#endif // __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG_
+#else // __GNUC__
 #define	POINTER_TO_UINT64(p)	(((sizeof(void *) == sizeof(UINT64)) ? (UINT64)(p) : (UINT64)((UINT)(p))))
+#endif // __GNUC__
+
 // Convert a UINT64 to pointer
+#ifdef __GNUC__
+#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
+#define	UINT64_TO_POINTER(i) (void *)(i)
+#else // __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG_
+#define	UINT64_TO_POINTER(i) (void *)((UINT)(i)))
+#endif // __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG_
+#else // __GNUC__
 #define	UINT64_TO_POINTER(i)	((sizeof(void *) == sizeof(UINT64)) ? (void *)(i) : (void *)((UINT)(i)))
+#endif // __GNUC__
 
 // Add the value
 #define	UINT_ADD(i, j)		((i == INFINITE || i == 0x7fffffff) ? (i) : (i += j))
