@@ -6848,7 +6848,7 @@ void SiRebootServerThread(THREAD *thread, void *param)
 	StStopServer();
 
 	// Start the server
-	StStartServer((bool)param);
+	StStartServer((bool)(intptr_t)param);
 }
 
 // Restart the server
@@ -6862,7 +6862,7 @@ void SiRebootServerEx(bool bridge, bool reset_setting)
 
 	server_reset_setting = reset_setting;
 
-	t = NewThread(SiRebootServerThread, (void *)bridge);
+	t = NewThread(SiRebootServerThread, (void *)(intptr_t)bridge);
 	ReleaseThread(t);
 }
 
@@ -7785,9 +7785,9 @@ void SiCalledDeleteIpTable(SERVER *s, PACK *p)
 
 	LockList(h->IpTable);
 	{
-		if (IsInList(h->IpTable, (void *)key))
+		if (IsInList(h->IpTable, (void *)(intptr_t)key))
 		{
-			IP_TABLE_ENTRY *e = (IP_TABLE_ENTRY *)key;
+			IP_TABLE_ENTRY *e = (IP_TABLE_ENTRY *)(intptr_t)key;
 			Delete(h->IpTable, e);
 			Free(e);
 		}
