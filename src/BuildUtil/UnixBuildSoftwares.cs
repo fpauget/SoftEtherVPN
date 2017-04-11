@@ -1017,8 +1017,6 @@ namespace BuildUtil
 				}
 			}
 
-			options.Add("-lm");
-
 			if (this.Os == OSList.Solaris)
 			{
 				options.Add("-lrt");
