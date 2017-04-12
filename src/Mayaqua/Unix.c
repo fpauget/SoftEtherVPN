@@ -1110,7 +1110,7 @@ void UnixGetOsInfo(OS_INFO *info)
 			}
 			else
 			{
-				b = ReadDump("/etc/turbolinux-release");
+				b = ReadDump("/etc/debian_version");
 				if (b != NULL)
 				{
 					info->OsVersion = CfgReadNextLine(b);
