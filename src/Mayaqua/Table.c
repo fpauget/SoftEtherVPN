@@ -1479,7 +1479,11 @@ bool LoadTableW(wchar_t *filename)
 
 	TrackingDisable();
 
+#ifdef LSB_PATH
+	b = ReadDump("/etc/softether/table_name");
+#else  // LSB_PATH
 	b = ReadDump("@table_name.txt");
+#endif // LSB_PATH
 	if (b != NULL)
 	{
 		char *s = CfgReadNextLine(b);

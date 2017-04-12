@@ -119,7 +119,11 @@
 #define	LANGLIST_FILENAME		"|languages.txt"
 #define	LANGLIST_FILENAME_WINE	"|languages_wine.txt"
 
+#ifdef LSB_PATH
+#define	LANG_CONFIG_FILENAME	L"/etc/softether/lang.config"
+#else  // LSB_PATH
 #define	LANG_CONFIG_FILENAME	L"@lang.config"
+#endif // LSB_PATH
 #define	LANG_CONFIG_TEMPLETE	"|lang.config"
 
 // Language constant

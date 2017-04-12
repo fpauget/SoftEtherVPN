@@ -117,7 +117,11 @@
 // Macro
 //#define	CHECK_CFG_NAME_EXISTS			// Check duplication of the existing name
 
+#ifdef LSB_PATH
+#define	SAVE_BINARY_FILE_NAME_SWITCH	L"/etc/softether/save_binary"
+#else  // LSB_PATH
 #define	SAVE_BINARY_FILE_NAME_SWITCH	L"@save_binary"
+#endif // LSB_PATH
 
 // Constants
 #define	TAG_DECLARE			"declare"

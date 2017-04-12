@@ -306,12 +306,20 @@ void FreeProbe()
 		char filename[MAX_SIZE];
 
 		// Write all to the file
+#ifdef LSB_PATH
+		MakeDirEx("/var/log/softether/probe");
+#else  // LSB_PATH
 		MakeDirEx("@probe_log");
+#endif // LSB_PATH
 
 		LocalTime(&st);
-
+#ifdef LSB_PATH
+		snprintf(filename, sizeof(filename), "/var/log/softether/probe/%04u%02u%02u_%02u%02u%02u.log",
+			st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+#else  // LSB_PATH
 		snprintf(filename, sizeof(filename), "@probe_log/%04u%02u%02u_%02u%02u%02u.log",
 			st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+#endif // LSB_PATH
 
 		DumpBuf(probe_buf, filename);
 	}
