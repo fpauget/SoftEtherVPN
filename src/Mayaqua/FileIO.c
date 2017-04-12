@@ -1167,7 +1167,7 @@ void InitHamcore()
 #ifdef LSB_PATH
 	UniFormat(tmp, sizeof(tmp), L"/var/lib/softether/%S", HAMCORE_FILE_NAME);
 
-	UniFormat(tmp2, sizeof(tmp2), L"/var/lib/softether/%s/%S", HAMCORE_FILE_NAME_2);
+	UniFormat(tmp2, sizeof(tmp2), L"/var/lib/softether/%S", HAMCORE_FILE_NAME_2);
 #else  //LSB_PATH
 	GetExeDirW(exe_dir, sizeof(exe_dir));
 	UniFormat(tmp, sizeof(tmp), L"%s/%S", exe_dir, HAMCORE_FILE_NAME);
