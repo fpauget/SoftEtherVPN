@@ -156,10 +156,18 @@ struct DYN_VALUE
 
 // SSL logging function
 //#define	ENABLE_SSL_LOGGING
+#ifdef LSB_PATH
+#define	SSL_LOGGING_DIRNAME			"/var/log/softether/ssl"
+#else  // LSB_PATH
 #define	SSL_LOGGING_DIRNAME			"@ssl_log"
+#endif // LSB_PATH
 
 // Private IP list file
+#ifdef LSB_PATH
+#define	PRIVATE_IP_TXT_FILENAME		"/etc/softether/private_ip"
+#else  // LSB_PATH
 #define	PRIVATE_IP_TXT_FILENAME		"@private_ip.txt"
+#endif // LSB_PATH
 
 // Start range of the random UDP port
 #define	RAND_UDP_PORT_START			5000
