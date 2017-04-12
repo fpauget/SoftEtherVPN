@@ -12,7 +12,7 @@ else
 	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
 endif
 
-OPTIONS_COMPILE:=-DBUILD_DATE_Y=$(shell date +%Y) -DBUILD_DATE_M=$(shell date +%m) -DBUILD_DATE_D=$(shell date +%d) -DBUILD_DATE_HO=$(shell date +%H) -DBUILD_DATE_MI=$(shell date +%M) -DBUILD_DATE_SE=$(shell date +%S) -DBUILD_PLACE='"$(shell hostname)"' -DBUILDER_NAME='"$(shell whoami)"' $(OPTIONS_COMPILE)
+OPTIONS_COMPILE:=-DBUILD_DATE_Y=$(shell date +%Y) -DBUILD_DATE_M=$(shell date +%m | sed s/^0//) -DBUILD_DATE_D=$(shell date +%d | sed s/^0//) -DBUILD_DATE_HO=$(shell date +%H | sed s/^0//) -DBUILD_DATE_MI=$(shell date +%M  | sed s/^0//) -DBUILD_DATE_SE=$(shell date +%S | sed s/^0//) -DBUILD_PLACE='"$(shell hostname)"' -DBUILDER_NAME='"$(shell whoami)"' $(OPTIONS_COMPILE)
 
 # Files
 HEADERS_MAYAQUA=src/Mayaqua/Cfg.h src/Mayaqua/cryptoki.h src/Mayaqua/Encrypt.h src/Mayaqua/FileIO.h src/Mayaqua/intelaes/iaesni.h src/Mayaqua/Internat.h src/Mayaqua/Kernel.h src/Mayaqua/Mayaqua.h src/Mayaqua/MayaType.h src/Mayaqua/Memory.h src/Mayaqua/Microsoft.h src/Mayaqua/Network.h src/Mayaqua/Object.h src/Mayaqua/OS.h src/Mayaqua/Pack.h src/Mayaqua/pkcs11.h src/Mayaqua/pkcs11f.h src/Mayaqua/pkcs11t.h src/Mayaqua/Secure.h src/Mayaqua/Str.h src/Mayaqua/Table.h src/Mayaqua/TcpIp.h src/Mayaqua/Tick64.h src/Mayaqua/Tracking.h src/Mayaqua/TunTap.h src/Mayaqua/Unix.h src/Mayaqua/Win32.h src/Mayaqua/zlib/zconf.h src/Mayaqua/zlib/zlib.h
