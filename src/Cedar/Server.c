@@ -115,13 +115,21 @@
 
 static SERVER *server = NULL;
 static LOCK *server_lock = NULL;
+#ifdef LSB_PATH
+char *SERVER_CONFIG_FILE_NAME = "/etc/softether/vpn_server.config";
+char *SERVER_CONFIG_FILE_NAME_IN_CLIENT = "/etc/softether/vpn_gate_svc.config";
+char *SERVER_CONFIG_FILE_NAME_IN_CLIENT_RELAY = "/etc/softether/vpn_gate_relay.config";
+char *BRIDGE_CONFIG_FILE_NAME = "/etc/softether/vpn_bridge.config";
+char *SERVER_CONFIG_TEMPLATE_NAME = "/etc/softether/vpn_server_template.config";
+char *BRIDGE_CONFIG_TEMPLATE_NAME = "/etc/softether/vpn_server_template.config";
+#else  //LSB_PATH
 char *SERVER_CONFIG_FILE_NAME = "@vpn_server.config";
 char *SERVER_CONFIG_FILE_NAME_IN_CLIENT = "@vpn_gate_svc.config";
 char *SERVER_CONFIG_FILE_NAME_IN_CLIENT_RELAY = "@vpn_gate_relay.config";
 char *BRIDGE_CONFIG_FILE_NAME = "@vpn_bridge.config";
 char *SERVER_CONFIG_TEMPLATE_NAME = "@vpn_server_template.config";
 char *BRIDGE_CONFIG_TEMPLATE_NAME = "@vpn_server_template.config";
-
+#endif //LSB_PATH
 static bool server_reset_setting = false;
 
 static volatile UINT global_server_flags[NUM_GLOBAL_SERVER_FLAGS] = {0};
