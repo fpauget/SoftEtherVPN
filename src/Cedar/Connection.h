@@ -310,7 +310,6 @@ struct CONNECTION
 	IP ClientIp;					// Client IP address
 	char ClientHostname[MAX_HOST_NAME_LEN + 1];	// Client host name
 	UINT Type;						// Type
-	bool DontUseTls1;				// Do not use TLS 1.0
 	void *hWndForUI;				// Parent window
 	bool IsInProc;					// In-process
 	char InProcPrefix[64];			// Prefix
