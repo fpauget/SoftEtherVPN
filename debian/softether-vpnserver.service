@@ -8,6 +8,7 @@ ExecStart=/usr/bin/vpnserver start
 ExecStop=/usr/bin/vpnserver stop
 KillMode=process
 Restart=on-failure
+RuntimeDirectory=softether
 
 [Install]
 WantedBy=multi-user.target
