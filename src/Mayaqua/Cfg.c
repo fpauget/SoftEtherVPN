@@ -160,7 +160,7 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	else
 	{
 #ifdef LSB_PATH
-		UniFormatUniFormat(filename, sizeof(filename), L"%s_%08u", original, revision_number);
+		UniFormat(filename, sizeof(filename), L"%s_%08u", original, revision_number);
 #else  // LSB_PATH
 		UniFormat(filename, sizeof(filename), L"%08u_%s",
 			revision_number, original[0] == L'@' ? original + 1 : original);
