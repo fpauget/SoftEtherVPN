@@ -79,7 +79,7 @@ Description: softether Command line utils
 
 Package: softether-vpnserver
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common
+Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common, ethtool
 Section: net
 Description: softether VPN Server daemon
  An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
