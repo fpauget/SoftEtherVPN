@@ -1,3 +1,2 @@
 #! /usr/bin/dh-exec
-debian/bin/vpncmd usr/bin/
-usr/vpncmd opt/
+bin/vpncmd/vpncmd usr/bin/

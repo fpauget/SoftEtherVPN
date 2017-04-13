@@ -1,8 +1,7 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
-CFLAGS := $(shell dpkg-buildflags --get CFLAGS)
-LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+export DEB_CFLAGS_MAINT_APPEND = -DLSB_PATH
 
 %:
 	dh $@ 
@@ -13,19 +12,17 @@ override_dh_auto_clean:
 	rm -fr Makefile* usr bin tmp src/bin/BuiltHamcoreFiles
 
 override_dh_auto_install:
-	patch -f < debian/makefile.patch
-	mkdir -p usr/bin
-	make install
+	# no make install;
 
 configure_x86_64:
-       echo -e "1\n2\n" | ./configure
+	echo -e "1\n2\n" | ./configure
 configure_i686:
-       echo -e "1\n1\n" | ./configure
+	echo -e "1\n1\n" | ./configure
 configure_armv6l:
-       echo -e "1\n1\n" | ./configure
+	echo -e "1\n1\n" | ./configure
 configure_armv5tel:
-       echo -e "1\n1\n" | ./configure
+	echo -e "1\n1\n" | ./configure
 configure_aarch64:
-       echo -e "1\n2\n" | ./configure
+	echo -e "1\n2\n" | ./configure
 configure_armv7l:
-       echo -e "1\n1\n" | ./configure
+	echo -e "1\n1\n" | ./configure
