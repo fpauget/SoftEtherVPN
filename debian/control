@@ -1,16 +1,33 @@
 Source: softether-vpn
 Section: net
 Priority: optional
-Maintainer: Dmitry Orlov <me@mosquito.su>
-Build-Depends: debhelper (>= 7.0.50~), linux-libc-dev, libssl-dev, libreadline-dev, build-essential, dh-exec
+Maintainer: Frédéric Pauget <frederic.pauget@enst.fr>
+Build-Depends: debhelper (>= 7.0.50~), libssl-dev (<< 1.1) | libssl1.0-dev, libreadline-dev, build-essential, dh-exec
 Standards-Version: 3.9.1
 Homepage: http://www.softether.org/
 
+Package: softether-common
+Architecture: any
+Section: net
+Description: softether VPN - common files
+ An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
+ SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's most
+ powerful and easy-to-use multi-protocol VPN software.
+ It runs on Windows, Linux, Mac, FreeBSD and Solaris.
+ SoftEther VPN is open source. You can use SoftEther for any
+ personal or commercial use for free charge.
+ SoftEther VPN is an optimum alternative to
+ OpenVPN and Microsoft's VPN servers. SoftEther VPN
+ has a clone-function of OpenVPN Server.
+ You can integrate from OpenVPN to SoftEther VPN smoothly.
+ SoftEther VPN is faster than OpenVPN.
+ SoftEther VPN also supports Microsoft SSTP VPN for Windows Vista / 7 / 8.
+
 Package: softether-vpnbridge
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, softether-vpncmd
+Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common
 Section: net
-Description: VPN Bridge daemon
+Description: softether VPN Bridge daemon
  An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
  SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's most
  powerful and easy-to-use multi-protocol VPN software.
@@ -26,9 +43,9 @@ Description: VPN Bridge daemon
 
 Package: softether-vpnclient
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, softether-vpncmd
+Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common
 Section: net
-Description: VPN Client daemon
+Description: softether VPN Client daemon
  An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
  SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's most
  powerful and easy-to-use multi-protocol VPN software.
@@ -44,9 +61,9 @@ Description: VPN Client daemon
 
 Package: softether-vpncmd
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common
 Section: net
-Description: Command line utils
+Description: softether Command line utils
  An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
  SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's most
  powerful and easy-to-use multi-protocol VPN software.
@@ -62,9 +79,9 @@ Description: Command line utils
 
 Package: softether-vpnserver
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, softether-vpncmd
+Depends: ${misc:Depends}, ${shlibs:Depends}, softether-common, ethtool
 Section: net
-Description: VPN Server daemon
+Description: softether VPN Server daemon
  An Open-Source Free Cross-platform Multi-protocol VPN Program, as an academic project from University of Tsukuba.
  SoftEther VPN ("SoftEther" means "Software Ethernet") is one of the world's most
  powerful and easy-to-use multi-protocol VPN software.

@@ -133,7 +133,11 @@
 #define	NN_POLL_CONNECTIVITY_INTERVAL	(1 * 60 * 1000)
 
 #define	NN_MAX_QUEUE_LENGTH				10000
+#ifdef LSB_PATH
+#define	NN_NO_NATIVE_NAT_FILENAME		L"/etc/softether/no_native_nat_niclist.txt"
+#else  // LSB_PATH
 #define	NN_NO_NATIVE_NAT_FILENAME		L"@no_native_nat_niclist.txt"
+#endif // LSB_PATH
 
 #define	NN_TIMEOUT_FOR_UNESTBALISHED_TCP	(10 * 1000)		// Time-out period of a TCP connection incomplete session
 

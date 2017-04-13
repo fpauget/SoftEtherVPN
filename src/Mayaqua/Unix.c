@@ -912,7 +912,9 @@ void *UnixNewSingleInstance(char *instance_name)
 	UNIXLOCKFILE *ret;
 	char tmp[MAX_SIZE];
 	char name[MAX_SIZE];
+#ifndef LSB_PATH
 	char dir[MAX_PATH];
+#endif //LSB_PATH
 	int fd;
 	struct flock lock;
 	int mode = S_IRUSR | S_IWUSR;
@@ -927,10 +929,13 @@ void *UnixNewSingleInstance(char *instance_name)
 		StrCpy(tmp, sizeof(tmp), instance_name);
 	}
 
-	GetExeDir(dir, sizeof(dir));
-
 	// File name generation
+#ifdef LSB_PATH
+	Format(name, sizeof(name), "/run/softether/%s", tmp);
+#else  //LSB_PATH
+	GetExeDir(dir, sizeof(dir));
 	Format(name, sizeof(name), "%s/.%s", dir, tmp);
+#endif //LSB_PATH
 
 	fd = open(name, O_WRONLY);
 	if (fd == -1)
@@ -1110,7 +1115,7 @@ void UnixGetOsInfo(OS_INFO *info)
 			}
 			else
 			{
-				b = ReadDump("/etc/turbolinux-release");
+				b = ReadDump("/etc/debian_version");
 				if (b != NULL)
 				{
 					info->OsVersion = CfgReadNextLine(b);
@@ -2323,14 +2328,14 @@ void UnixGenPidFileName(char *name, UINT size)
 	char exe_name[MAX_PATH];
 	UCHAR hash[MD5_SIZE];
 	char tmp1[64];
+#ifndef LSB_PATH
 	char dir[MAX_PATH];
+#endif // LSB_PATH
 	// Validate arguments
 	if (name == NULL)
 	{
 		return;
 	}
-
-	GetExeDir(dir, sizeof(dir));
 
 	GetExeName(exe_name, sizeof(exe_name));
 	StrCat(exe_name, sizeof(exe_name), ":pid_hash");
@@ -2339,7 +2344,12 @@ void UnixGenPidFileName(char *name, UINT size)
 	Hash(hash, exe_name, StrLen(exe_name), false);
 	BinToStr(tmp1, sizeof(tmp1), hash, sizeof(hash));
 
+#ifdef LSB_PATH
+	Format(name, size, "/run/softether/pid_%s", tmp1);
+#else  // LSB_PATH
+	GetExeDir(dir, sizeof(dir));
 	Format(name, size, "%s/.pid_%s", dir, tmp1);
+#endif // LSB_PATH
 }
 
 // Delete the PID file
@@ -2368,14 +2378,14 @@ void UnixGenCtlFileName(char *name, UINT size)
 	char exe_name[MAX_PATH];
 	UCHAR hash[MD5_SIZE];
 	char tmp1[64];
+#ifndef LSB_PATH
 	char dir[MAX_PATH];
+#endif // LSB_PATH
 	// Validate arguments
 	if (name == NULL)
 	{
 		return;
 	}
-
-	GetExeDir(dir, sizeof(dir));
 
 	GetExeName(exe_name, sizeof(exe_name));
 	StrCat(exe_name, sizeof(exe_name), ":pid_hash");
@@ -2384,7 +2394,13 @@ void UnixGenCtlFileName(char *name, UINT size)
 	Hash(hash, exe_name, StrLen(exe_name), false);
 	BinToStr(tmp1, sizeof(tmp1), hash, sizeof(hash));
 
+#ifdef LSB_PATH
+	Format(name, size, "/run/softether/ctl_%s", tmp1);
+#else  // LSB_PATH
+	GetExeDir(dir, sizeof(dir));
 	Format(name, size, "%s/.ctl_%s", dir, tmp1);
+#endif // LSB_PATH
+
 }
 
 // Write the CTL file

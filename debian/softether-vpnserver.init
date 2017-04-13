@@ -21,7 +21,7 @@
 
 set -e
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/qmsys/bin
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/vpnserver
 NAME=vpnserver
 DESC="SoftEtherVPN Server"

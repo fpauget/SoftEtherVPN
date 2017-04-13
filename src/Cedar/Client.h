@@ -125,7 +125,11 @@
 
 
 // Constants
+#ifdef LSB_PATH
+#define	CLIENT_CONFIG_FILE_NAME				"/etc/softether/vpn_client.config"
+#else  // LSB_PATH
 #define	CLIENT_CONFIG_FILE_NAME				"@vpn_client.config"
+#endif // LSB_PATH
 #define	CLIENT_DEFAULT_KEEPALIVE_HOST		"keepalive.softether.org"
 #define	CLIENT_DEFAULT_KEEPALIVE_PORT		80
 #define	CLIENT_DEFAULT_KEEPALIVE_INTERVAL	KEEP_INTERVAL_DEFAULT
@@ -145,7 +149,11 @@
 #define	CLIENT_WIN32_EXE_FILENAME_X64		"vpnclient_x64.exe"
 #define	CLIENT_WIN32_EXE_FILENAME_IA64		"vpnclient_ia64.exe"
 
+#ifdef LSB_PATH
+#define CLIENT_CUSTOM_INI_FILENAME			"/etc/softether/custom.ini"
+#else  // LSB_PATH
 #define CLIENT_CUSTOM_INI_FILENAME			"@custom.ini"
+#endif // LSB_PATH
 
 #define	CLIENT_GLOBAL_PULSE_NAME			"clientglobalpulse"
 

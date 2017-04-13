@@ -1012,7 +1012,9 @@ BUF *ReadHamcoreW(wchar_t *filename)
 BUF *ReadHamcore(char *name)
 {
 	wchar_t tmp[MAX_SIZE];
+#ifndef LSB_PATH
 	wchar_t exe_dir[MAX_SIZE];
+#endif // LSB_PATH
 	BUF *b;
 	char filename[MAX_PATH];
 	// Validate arguments
@@ -1041,9 +1043,13 @@ BUF *ReadHamcore(char *name)
 	}
 
 	// If the file exist in hamcore/ directory on the local disk, read it
+#ifdef LSB_PATH
+	UniFormat(tmp, sizeof(tmp), L"/var/lib/softether/%S/%S", HAMCORE_DIR_NAME, filename);
+#else  // LSB_PATH
 	GetExeDirW(exe_dir, sizeof(exe_dir));
 
 	UniFormat(tmp, sizeof(tmp), L"%s/%S/%S", exe_dir, HAMCORE_DIR_NAME, filename);
+#endif // LSB_PATH
 
 	b = ReadDumpW(tmp);
 	if (b != NULL)
@@ -1146,7 +1152,9 @@ void InitHamcore()
 {
 	wchar_t tmp[MAX_PATH];
 	wchar_t tmp2[MAX_PATH];
+#ifndef LSB_PATH
 	wchar_t exe_dir[MAX_PATH];
+#endif  //LSB_PATH
 	UINT i, num;
 	char header[HAMCORE_HEADER_SIZE];
 
@@ -1156,12 +1164,16 @@ void InitHamcore()
 	{
 		return;
 	}
+#ifdef LSB_PATH
+	UniFormat(tmp, sizeof(tmp), L"/var/lib/softether/%S", HAMCORE_FILE_NAME);
 
+	UniFormat(tmp2, sizeof(tmp2), L"/var/lib/softether/%S", HAMCORE_FILE_NAME_2);
+#else  //LSB_PATH
 	GetExeDirW(exe_dir, sizeof(exe_dir));
 	UniFormat(tmp, sizeof(tmp), L"%s/%S", exe_dir, HAMCORE_FILE_NAME);
 
 	UniFormat(tmp2, sizeof(tmp2), L"%s/%S", exe_dir, HAMCORE_FILE_NAME_2);
-
+#endif  //LSB_PATH
 	// If there is _hamcore.se2, overwrite it yo the hamcore.se2 
 	FileReplaceRenameW(tmp2, tmp);
 

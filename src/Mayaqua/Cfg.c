@@ -123,6 +123,9 @@
 #include <time.h>
 #include <errno.h>
 #include <Mayaqua/Mayaqua.h>
+#ifdef LSB_PATH
+#include <libgen.h>
+#endif // LSB_PATH
 
 // Create a backup of the configuration file
 void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number)
@@ -139,7 +142,11 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	}
 
 	// Determine the directory name
+#ifdef LSB_PATH
+	UniFormat(dirname, sizeof(dirname), L"/var/backups/softether/%s", basename(CopyUniToStr(original)));
+#else  // LSB_PATH
 	UniFormat(dirname, sizeof(dirname), L"@backup.%s", original[0] == L'@' ? original + 1 : original);
+#endif // LSB_PATH
 
 	// Determine the file name
 	LocalTime(&st);
@@ -152,8 +159,12 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	}
 	else
 	{
+#ifdef LSB_PATH
+		UniFormat(filename, sizeof(filename), L"%s_%08u", original, revision_number);
+#else  // LSB_PATH
 		UniFormat(filename, sizeof(filename), L"%08u_%s",
 			revision_number, original[0] == L'@' ? original + 1 : original);
+#endif // LSB_PATH
 	}
 
 	// Don't save if the date and time has not been changed
