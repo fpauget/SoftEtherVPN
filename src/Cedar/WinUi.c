@@ -1475,7 +1475,7 @@ void WinConnectDlgThread(THREAD *thread, void *param)
 		nat_t_svc_name = d->nat_t_svc_name;
 	}
 
-	s = ConnectEx3(d->hostname, d->port, d->timeout, &d->cancel, nat_t_svc_name, &nat_t_error_code, d->try_start_ssl, d->ssl_no_tls, false);
+	s = ConnectEx3(d->hostname, d->port, d->timeout, &d->cancel, nat_t_svc_name, &nat_t_error_code, d->try_start_ssl, false);
 
 	d->ret_sock = s;
 	d->nat_t_error_code = nat_t_error_code;
@@ -1551,11 +1551,11 @@ UINT WinConnectDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam, void *
 }
 
 // TCP connection with showing the UI
-SOCK *WinConnectEx2(HWND hWnd, char *server, UINT port, UINT timeout, UINT icon_id, wchar_t *caption, wchar_t *info, bool try_start_ssl, bool ssl_no_tls)
+SOCK *WinConnectEx2(HWND hWnd, char *server, UINT port, UINT timeout, UINT icon_id, wchar_t *caption, wchar_t *info, bool try_start_ssl)
 {
-	return WinConnectEx3(hWnd, server, port, timeout, icon_id, caption, info, NULL, false, try_start_ssl, ssl_no_tls);
+	return WinConnectEx3(hWnd, server, port, timeout, icon_id, caption, info, NULL, false, try_start_ssl);
 }
-SOCK *WinConnectEx3(HWND hWnd, char *server, UINT port, UINT timeout, UINT icon_id, wchar_t *caption, wchar_t *info, UINT *nat_t_error_code, char *nat_t_svc_name, bool try_start_ssl, bool ssl_no_tls)
+SOCK *WinConnectEx3(HWND hWnd, char *server, UINT port, UINT timeout, UINT icon_id, wchar_t *caption, wchar_t *info, UINT *nat_t_error_code, char *nat_t_svc_name, bool try_start_ssl)
 {
 	wchar_t tmp[MAX_SIZE];
 	wchar_t tmp2[MAX_SIZE];
@@ -1591,7 +1591,6 @@ SOCK *WinConnectEx3(HWND hWnd, char *server, UINT port, UINT timeout, UINT icon_
 	Zero(&d, sizeof(d));
 
 	d.try_start_ssl = try_start_ssl;
-	d.ssl_no_tls = ssl_no_tls;
 	d.cancel = false;
 	d.caption = caption;
 	d.icon_id = icon_id;

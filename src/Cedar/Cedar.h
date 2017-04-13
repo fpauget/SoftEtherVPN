@@ -157,12 +157,24 @@
 #endif	// BUILD_PLACE
 
 // Specifies the build date
+#ifndef BUILD_DATE_Y
 #define	BUILD_DATE_Y		2016
+#endif // BUILD_DATE_Y
+#ifndef BUILD_DATE_M
 #define	BUILD_DATE_M		11
+#endif // BUILD_DATE_M
+#ifndef BUILD_DATE_D
 #define	BUILD_DATE_D		27
+#endif // BUILD_DATE_D
+#ifndef BUILD_DATE_HO
 #define	BUILD_DATE_HO		14
+#endif // BUILD_DATE_HO
+#ifndef BUILD_DATE_MI
 #define	BUILD_DATE_MI		33
+#endif // BUILD_DATE_MI
+#ifndef BUILD_DATE_SE
 #define	BUILD_DATE_SE		59
+#endif // BUILD_DATE_SE
 
 // Tolerable time difference
 #define	ALLOW_TIMESTAMP_DIFF		(UINT64)(3 * 24 * 60 * 60 * 1000)
