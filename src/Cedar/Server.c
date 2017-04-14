@@ -1205,11 +1205,9 @@ void EnumLogFileDir(LIST *o, char *dirname)
 
 		if (e->Folder == false && e->FileSize > 0)
 		{
-			char full_path[MAX_PATH];
 			char file_path[MAX_PATH];
 
 			Format(file_path, sizeof(file_path), "%s/%s", dirname, e->FileName);
-			Format(full_path, sizeof(full_path), "%s/%s", exe_dir, file_path);
 
 			if (EndWith(file_path, ".log"))
 			{
