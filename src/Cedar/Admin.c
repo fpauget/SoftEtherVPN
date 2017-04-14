@@ -114,6 +114,9 @@
 // RPC Module for Management
 
 #include "CedarPch.h"
+#ifdef LSB_PATH
+#include <string.h>
+#endif //LSB_PATH
 
 // Macro for RPC function declaration
 #define	DECLARE_RPC_EX(rpc_name, data_type, function, in_rpc, out_rpc, free_rpc)		\
@@ -10338,8 +10341,17 @@ void SiReadLocalLogFile(SERVER *s, char *filepath, UINT offset, RPC_READ_LOG_FIL
 
 	Zero(t, sizeof(RPC_READ_LOG_FILE));
 
+#ifdef LSB_PATH
+	// Security test : only open files in /var/log/softether/
+	strcpy(exe_dir, "/var/log/softether/");
+	if (strncmp(filepath, exe_dir, 19) != 0) {
+		return;
+	}
+	Format(full_path, sizeof(full_path), "%s", filepath);
+#else  // LSB_PATH
 	GetExeDir(exe_dir, sizeof(exe_dir));
 	Format(full_path, sizeof(full_path), "%s/%s", exe_dir, filepath);
+#endif //LSB_PATH
 
 	// Read file
 	o = FileOpenEx(full_path, false, false);

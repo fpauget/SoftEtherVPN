@@ -1106,7 +1106,9 @@ void FreeEnumLogFile(LIST *o)
 // Enumerate the log files associated with the virtual HUB (All logs are listed in the case of server administrator)
 LIST *EnumLogFile(char *hubname)
 {
+#ifndef LSB_PATH
 	char exe_dir[MAX_PATH];
+#endif //LSB_PATH
 	char tmp[MAX_PATH];
 	LIST *o = NewListFast(CmpLogFile);
 	DIRLIST *dir;
@@ -1116,16 +1118,26 @@ LIST *EnumLogFile(char *hubname)
 		hubname = NULL;
 	}
 
+#ifndef LSB_PATH
 	GetExeDir(exe_dir, sizeof(exe_dir));
-
+#endif //LSB_PATH
+	
 	// Enumerate in the server_log
 	if (hubname == NULL)
 	{
+#ifdef LSB_PATH
+		EnumLogFileDir(o, "/var/log/softether/server");
+#else  // LSB_PATH
 		EnumLogFileDir(o, "server_log");
+#endif //LSB_PATH
 	}
 
 	// Enumerate in the packet_log
+#ifdef LSB_PATH
+	Format(tmp, sizeof(tmp), "/var/log/softether/packet");
+#else  // LSB_PATH
 	Format(tmp, sizeof(tmp), "%s/packet_log", exe_dir);
+#endif //LSB_PATH
 	dir = EnumDir(tmp);
 	if (dir != NULL)
 	{
@@ -1140,7 +1152,11 @@ LIST *EnumLogFile(char *hubname)
 
 				if (hubname == NULL || StrCmpi(hubname, e->FileName) == 0)
 				{
+#ifdef LSB_PATH
+					Format(dir_name, sizeof(dir_name), "/var/log/softether/packet/%s", e->FileName);
+#else  // LSB_PATH
 					Format(dir_name, sizeof(dir_name), "packet_log/%s", e->FileName);
+#endif //LSB_PATH
 					EnumLogFileDir(o, dir_name);
 				}
 			}
@@ -1150,7 +1166,11 @@ LIST *EnumLogFile(char *hubname)
 	}
 
 	// Enumerate in the security_log
+#ifdef LSB_PATH
+	Format(tmp, sizeof(tmp), "/var/log/softether/security");
+#else  // LSB_PATH
 	Format(tmp, sizeof(tmp), "%s/security_log", exe_dir);
+#endif //LSB_PATH
 	dir = EnumDir(tmp);
 	if (dir != NULL)
 	{
@@ -1165,7 +1185,11 @@ LIST *EnumLogFile(char *hubname)
 
 				if (hubname == NULL || StrCmpi(hubname, e->FileName) == 0)
 				{
+#ifdef LSB_PATH
+					Format(dir_name, sizeof(dir_name), "/var/log/softether/security/%s", e->FileName);
+#else  // LSB_PATH
 					Format(dir_name, sizeof(dir_name), "security_log/%s", e->FileName);
+#endif //LSB_PATH
 					EnumLogFileDir(o, dir_name);
 				}
 			}
@@ -1181,7 +1205,9 @@ LIST *EnumLogFile(char *hubname)
 void EnumLogFileDir(LIST *o, char *dirname)
 {
 	UINT i;
+#ifndef LSB_PATH	
 	char exe_dir[MAX_PATH];
+#endif //LSB_PATH
 	char dir_full_path[MAX_PATH];
 	DIRLIST *dir;
 	// Validate arguments
@@ -1190,8 +1216,12 @@ void EnumLogFileDir(LIST *o, char *dirname)
 		return;
 	}
 
+#ifdef LSB_PATH
+	Format(dir_full_path, sizeof(dir_full_path), "%s", dirname);
+#else  // LSB_PATH
 	GetExeDir(exe_dir, sizeof(exe_dir));
 	Format(dir_full_path, sizeof(dir_full_path), "%s/%s", exe_dir, dirname);
+#endif //LSB_PATH
 
 	dir = EnumDir(dir_full_path);
 	if (dir == NULL)
