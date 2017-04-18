@@ -143,7 +143,7 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 
 	// Determine the directory name
 #ifdef LSB_PATH
-	UniFormat(dirname, sizeof(dirname), L"/var/backups/softether/%s", basename(CopyUniToStr(original)));
+	UniStrCpy(dirname, sizeof(dirname), L"/var/backups/softether");
 #else  // LSB_PATH
 	UniFormat(dirname, sizeof(dirname), L"@backup.%s", original[0] == L'@' ? original + 1 : original);
 #endif // LSB_PATH
@@ -160,7 +160,8 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	else
 	{
 #ifdef LSB_PATH
-		UniFormat(filename, sizeof(filename), L"%s_%08u", original, revision_number);
+		UniFormat(filename, sizeof(filename), L"%s_%08u",
+		        CopyStrToUni(basename(CopyUniToStr(original))), revision_number);
 #else  // LSB_PATH
 		UniFormat(filename, sizeof(filename), L"%08u_%s",
 			revision_number, original[0] == L'@' ? original + 1 : original);
@@ -174,9 +175,10 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	}
 
 	UniStrCpy(rw->LastSavedDateStr, sizeof(rw->LastSavedDateStr), datestr);
+	UniFormat(fullpath, sizeof(fullpath), L"%s/%s", dirname, filename);
 
 	// Check the existence of file name
-	if (IsFileExistsW(filename))
+	if (IsFileExistsW(fullpath))
 	{
 		return;
 	}
@@ -185,7 +187,6 @@ void BackupCfgWEx(CFG_RW *rw, FOLDER *f, wchar_t *original, UINT revision_number
 	MakeDirW(dirname);
 
 	// Save the file
-	UniFormat(fullpath, sizeof(fullpath), L"%s/%s", dirname, filename);
 	CfgSaveW(f, fullpath);
 }
 
