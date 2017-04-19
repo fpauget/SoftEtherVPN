@@ -461,7 +461,9 @@ void AddXToCertList(LIST *o, X *x)
 void AddAllChainCertsToCertList(LIST *o)
 {
 	wchar_t dirname[MAX_SIZE];
+#ifndef LSB_PATH
 	wchar_t exedir[MAX_SIZE];
+#endif // LSB_PATH
 	DIRLIST *dir;
 	// Validate arguments
 	if (o == NULL)
@@ -469,9 +471,13 @@ void AddAllChainCertsToCertList(LIST *o)
 		return;
 	}
 
+#ifdef LSB_PATH
+	UniStrCpy(dirname, sizeof(dirname), L"/etc/softether/chain_certs");
+#else // LSB_PATH
 	GetExeDirW(exedir, sizeof(exedir));
 
 	CombinePathW(dirname, sizeof(dirname), exedir, L"chain_certs");
+#endif // LSB_PATH
 
 	MakeDirExW(dirname);
 

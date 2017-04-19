@@ -12791,7 +12791,9 @@ void SetWantToUseCipher(SOCK *sock, char *name)
 void AddChainSslCertOnDirectory(struct ssl_ctx_st *ctx)
 {
 	wchar_t dirname[MAX_SIZE];
+#ifndef LSB_PATH
 	wchar_t exedir[MAX_SIZE];
+#endif // LSB_PATH
 	wchar_t txtname[MAX_SIZE];
 	DIRLIST *dir;
 	LIST *o;
@@ -12805,9 +12807,13 @@ void AddChainSslCertOnDirectory(struct ssl_ctx_st *ctx)
 
 	o = NewListFast(NULL);
 
+#ifdef LSB_PATH
+	UniStrCpy(dirname, sizeof(dirname), L"/etc/softether/chain_certs");
+#else // LSB_PATH
 	GetExeDirW(exedir, sizeof(exedir));
 
 	CombinePathW(dirname, sizeof(dirname), exedir, L"chain_certs");
+#endif // LSB_PATH
 
 	MakeDirExW(dirname);
 
